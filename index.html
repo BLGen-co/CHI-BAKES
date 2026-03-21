@@ -5,1219 +5,1057 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chi Bakes — Pâtisserie Artisanale</title>
   <meta name="google-site-verification" content="L-EB3IXN1nMs3y2Vy0j4W8RaQwlsj1weOAJVQvTKMUw" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta name="description" content="Chi Bakes — Pâtisserie artisanale spécialisée dans les gâteaux sur mesure pour mariages, anniversaires et événements. Commandez votre création unique." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    /* ═══════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════ */
     :root {
-      --cream: #F5EFE4;
-      --beige: #E8DDD0;
-      --beige-dark: #D4C4B0;
-      --red: #B84C3C;
-      --red-dark: #8F3527;
-      --red-light: #D4614E;
-      --brown: #5C3D2E;
-      --brown-light: #7A5540;
-      --text: #3A2A1E;
-      --text-light: #7A6A5A;
-      --white: #FEFAF5;
+      --cream:       #FBF5EC;
+      --cream-warm:  #F5EAD8;
+      --caramel:     #C8854A;
+      --caramel-lt:  #E8A96A;
+      --honey:       #D4A054;
+      --bordeaux:    #8C3A2E;
+      --bordeaux-dk: #6A2A1E;
+      --bordeaux-lt: #B04A3C;
+      --rose:        #E8C4B0;
+      --rose-dk:     #D4A090;
+      --brown:       #4A2E1E;
+      --brown-lt:    #6A4A35;
+      --text:        #2C1A0E;
+      --text-md:     #5A3A25;
+      --text-lt:     #8A6A55;
+      --white:       #FFFDF8;
+      --shadow-sm:   0 2px 12px rgba(44,26,14,0.08);
+      --shadow-md:   0 8px 32px rgba(44,26,14,0.12);
+      --shadow-lg:   0 20px 60px rgba(44,26,14,0.15);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
+    html { scroll-behavior: smooth; font-size: 16px; }
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--cream);
       color: var(--text);
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* ── TEXTURE OVERLAY ── */
-    body::before {
+    /* Grain texture overlay */
+    body::after {
       content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.5;
     }
 
-    /* ── NAV ── */
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ═══════════════════════════════════
+       TYPOGRAPHY HELPERS
+    ═══════════════════════════════════ */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+      font-weight: 500; color: var(--caramel);
+    }
+    .eyebrow::before { content:''; width:1.8rem; height:1px; background:var(--caramel); flex-shrink:0; }
+
+    h2.sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15; color: var(--text); margin: .6rem 0 1rem;
+    }
+    h2.sec-title em { font-style: italic; color: var(--bordeaux); }
+
+    .sec-sub {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: clamp(.95rem, 2vw, 1.1rem);
+      color: var(--text-lt); line-height: 1.75; max-width: 520px;
+    }
+
+    /* ═══════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════ */
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .95rem 2rem; border-radius: 3rem;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 500;
+      letter-spacing: .03em; cursor: pointer; border: none;
+      transition: background .25s, box-shadow .25s, transform .2s;
+    }
+    .btn:active { transform: scale(.97); }
+
+    .btn-primary {
+      background: var(--bordeaux); color: var(--white);
+      box-shadow: 0 4px 20px rgba(140,58,46,.3);
+    }
+    .btn-primary:hover {
+      background: var(--bordeaux-dk);
+      box-shadow: 0 8px 30px rgba(140,58,46,.4);
+    }
+
+    .btn-warm {
+      background: var(--caramel); color: var(--white);
+      box-shadow: 0 4px 20px rgba(200,133,74,.3);
+    }
+    .btn-warm:hover { background: #b5743a; box-shadow: 0 8px 28px rgba(200,133,74,.4); }
+
+    .btn-ghost {
+      background: transparent; color: var(--bordeaux);
+      border: 1.5px solid var(--bordeaux);
+    }
+    .btn-ghost:hover { background: var(--bordeaux); color: var(--white); }
+
+    /* ═══════════════════════════════════
+       NAV
+    ═══════════════════════════════════ */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1.2rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(245, 239, 228, 0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--beige-dark);
+      position: fixed; top:0; left:0; right:0; z-index:200;
+      height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.2rem, 5vw, 4rem);
+      background: rgba(251,245,236,.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(200,133,74,.2);
     }
 
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--red-dark);
-      letter-spacing: 0.02em;
-      text-decoration: none;
+      font-size: 1.4rem; font-weight: 700; color: var(--bordeaux);
     }
-
-    .nav-logo span {
-      font-style: italic;
-      color: var(--brown);
-    }
+    .nav-logo span { font-style: italic; color: var(--caramel); }
 
     .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
+      display: flex; list-style: none;
+      gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center;
     }
-
     .nav-links a {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.3s;
+      font-size: .82rem; font-weight: 400;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-md); transition: color .2s;
     }
-
-    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover { color: var(--bordeaux); }
 
     .nav-cta {
-      background: var(--red);
-      color: var(--white) !important;
-      padding: 0.55rem 1.4rem;
-      border-radius: 2rem;
-      transition: background 0.3s !important;
+      background: var(--bordeaux); color: var(--white) !important;
+      padding: .55rem 1.4rem; border-radius: 3rem;
+      font-size: .8rem !important; font-weight: 500 !important;
+      letter-spacing: .05em !important; text-transform: none !important;
+      transition: background .25s !important;
+    }
+    .nav-cta:hover { background: var(--bordeaux-dk) !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap:5px; cursor:pointer; padding:4px;
+    }
+    .hamburger span {
+      display:block; width:24px; height:2px;
+      background:var(--text); border-radius:2px; transition:all .3s;
     }
 
-    .nav-cta:hover { background: var(--red-dark) !important; color: var(--white) !important; }
+    /* Mobile nav overlay */
+    .mobile-nav {
+      display: none; position: fixed;
+      top:70px; left:0; right:0; bottom:0;
+      background: rgba(251,245,236,.97);
+      backdrop-filter: blur(20px);
+      z-index:199; flex-direction: column;
+      align-items: center; justify-content: center; gap:2.5rem;
+    }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-style: italic;
+      color: var(--text); transition: color .2s;
+    }
+    .mobile-nav a:hover { color: var(--bordeaux); }
+    .mobile-nav .btn { font-style: normal; font-family:'DM Sans',sans-serif; }
 
-    /* ── HERO ── */
-    .hero {
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
+    #hero {
       min-height: 100vh;
+      padding-top: 70px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding-top: 80px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
 
-    .hero-bg-circle {
-      position: absolute;
-      right: -10vw;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 65vw;
-      height: 65vw;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--beige) 0%, var(--beige-dark) 60%, transparent 100%);
-      opacity: 0.6;
+    /* Decorative background blob */
+    #hero::before {
+      content:''; position:absolute;
+      right:-15%; top:10%;
+      width:70%; height:80%; border-radius:60% 40% 50% 50%;
+      background: radial-gradient(ellipse, var(--cream-warm) 0%, transparent 70%);
+      opacity:.7;
     }
 
     .hero-left {
-      padding: 6rem 4rem 6rem 6rem;
-      position: relative;
-      z-index: 2;
+      display:flex; flex-direction:column; justify-content:center;
+      padding: clamp(3rem,8vw,7rem) clamp(1.5rem,4vw,4rem) clamp(3rem,6vw,5rem) clamp(1.5rem,6vw,6rem);
+      position:relative; z-index:2;
     }
 
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 1.5rem;
+    .hero-left .eyebrow { margin-bottom:1.2rem; }
+
+    .hero-left h1 {
+      font-family:'Playfair Display',serif;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      line-height:1.08; color:var(--text); margin-bottom:1.4rem;
+    }
+    .hero-left h1 em { font-style:italic; color:var(--bordeaux); display:block; }
+
+    .hero-tagline {
+      font-family:'Lora',serif; font-style:italic;
+      font-size: clamp(1rem,2vw,1.2rem); color:var(--text-lt);
+      line-height:1.75; max-width:420px; margin-bottom:2.5rem;
     }
 
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--red);
-    }
+    .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:3rem; }
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 1.05;
-      color: var(--text);
-      margin-bottom: 1.8rem;
+    .hero-trust {
+      display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;
     }
-
-    .hero h1 em {
-      display: block;
-      font-style: italic;
-      color: var(--red);
+    .trust-item {
+      display:flex; align-items:center; gap:.5rem;
+      font-size:.8rem; color:var(--text-lt);
     }
+    .trust-item strong { color:var(--text-md); }
+    .trust-dot { width:4px; height:4px; border-radius:50%; background:var(--caramel); }
 
-    .hero-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      line-height: 1.7;
-      color: var(--text-light);
-      max-width: 440px;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--red);
-      color: var(--white);
-      padding: 1rem 2.2rem;
-      border-radius: 3rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      transition: all 0.3s;
-      box-shadow: 0 4px 20px rgba(184, 76, 60, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--red-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(184, 76, 60, 0.4);
-    }
-
-    .btn-outline {
-      display: inline-block;
-      border: 1.5px solid var(--brown-light);
-      color: var(--brown);
-      padding: 1rem 2.2rem;
-      border-radius: 3rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    .btn-outline:hover {
-      background: var(--brown);
-      color: var(--white);
-      border-color: var(--brown);
-    }
-
+    /* Hero right — mood collage */
     .hero-right {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 1rem;
-      padding: 6rem 5rem 6rem 2rem;
-      height: 100vh;
+      position:relative; z-index:2;
+      display:grid;
+      grid-template-columns: 55% 45%;
+      grid-template-rows: 55% 45%;
+      gap:.8rem;
+      padding: clamp(5rem,10vw,8rem) clamp(1rem,3vw,3rem) clamp(2rem,5vw,4rem) .5rem;
     }
 
-    .hero-img-card {
-      border-radius: 1.5rem;
-      overflow: hidden;
-      position: relative;
+    .hcard {
+      border-radius:2rem; overflow:hidden;
+      position:relative;
     }
-
-    .hero-img-card:nth-child(1) {
-      grid-row: 1 / 3;
-      border-radius: 8rem 2rem 2rem 2rem;
+    .hcard:nth-child(1) {
+      grid-row:1/3; border-radius:4rem 2rem 2rem 4rem;
     }
+    .hcard:nth-child(2) { border-radius:2rem 4rem 1rem 2rem; }
+    .hcard:nth-child(3) { border-radius:2rem 1rem 4rem 2rem; }
 
-    .hero-img-card:nth-child(2) {
-      border-radius: 2rem 8rem 2rem 2rem;
+    .hcard-inner {
+      width:100%; height:100%; min-height:160px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:clamp(2rem,5vw,4rem); position:relative;
     }
+    .hc1 { background: linear-gradient(160deg, #D4A878 0%, #C4845A 100%); }
+    .hc2 { background: linear-gradient(160deg, #C44A3A 0%, #8C2A1E 100%); }
+    .hc3 { background: linear-gradient(160deg, #E8D0B8 0%, #D4B898 100%); }
 
-    .hero-img-card:nth-child(3) {
-      border-radius: 2rem 2rem 8rem 2rem;
+    /* Floating tag */
+    .hero-float {
+      position:absolute; bottom:2rem; left:-1rem;
+      background:var(--white); border-radius:1.2rem;
+      padding:.9rem 1.3rem;
+      display:flex; align-items:center; gap:.8rem;
+      box-shadow: var(--shadow-md); z-index:5;
+      animation: bob 3.5s ease-in-out infinite;
     }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .hf-icon { font-size:1.8rem; }
+    .hf-text strong { display:block; font-size:.88rem; color:var(--text); }
+    .hf-text span { font-size:.72rem; color:var(--text-lt); }
 
-    .cake-placeholder {
-      width: 100%;
-      height: 100%;
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
+    /* ═══════════════════════════════════
+       SECTION SPACING
+    ═══════════════════════════════════ */
+    .section { padding: clamp(4rem,8vw,7rem) clamp(1.2rem,6vw,6rem); }
+    .section-center { text-align:center; }
+    .section-center .sec-sub { margin:0 auto; }
 
-    .cake-placeholder::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: inherit;
-      opacity: 0.2;
-    }
-
-    .cp1 { background: linear-gradient(135deg, #D4B896 0%, #C49A78 100%); }
-    .cp2 { background: linear-gradient(135deg, #B84C3C 0%, #8F3527 100%); }
-    .cp3 { background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%); }
-
-    /* ── FLOATING BADGE ── */
-    .float-badge {
-      position: absolute;
-      bottom: 2rem;
-      left: -1rem;
-      background: var(--white);
-      border-radius: 1rem;
-      padding: 0.8rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-      z-index: 5;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .float-badge .badge-icon { font-size: 1.8rem; }
-    .float-badge .badge-text { font-family: 'DM Sans', sans-serif; }
-    .float-badge .badge-text strong { display: block; font-size: 0.9rem; color: var(--text); }
-    .float-badge .badge-text span { font-size: 0.72rem; color: var(--text-light); }
-
-    /* ── SECTION COMMON ── */
-    section { padding: 7rem 6rem; }
-
-    .section-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .section-eyebrow::before {
-      content: '';
-      width: 1.5rem;
-      height: 1px;
-      background: var(--red);
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 4vw, 3.5rem);
-      line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 1rem;
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--red);
-    }
-
-    .section-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      color: var(--text-light);
-      line-height: 1.7;
-      max-width: 520px;
-    }
-
-    /* ── DIVIDER ── */
     .divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--beige-dark), transparent);
+      height:1px; margin:0 clamp(1.5rem,6vw,6rem);
+      background: linear-gradient(to right, transparent, rgba(200,133,74,.3), transparent);
     }
 
-    /* ── SERVICES ── */
-    #services {
+    /* ═══════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════ */
+    #about {
       background: var(--white);
-      position: relative;
-      overflow: hidden;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap: clamp(2rem,6vw,6rem); align-items:center;
     }
 
-    #services::before {
-      content: '';
-      position: absolute;
-      top: -10rem;
-      right: -10rem;
-      width: 40rem;
-      height: 40rem;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--beige) 0%, transparent 70%);
-      opacity: 0.5;
+    .about-visual {
+      position:relative;
+    }
+    .about-main-card {
+      background: linear-gradient(145deg, var(--cream-warm), var(--rose));
+      border-radius:3rem 1.5rem 3rem 1.5rem;
+      padding:3rem; text-align:center;
+      font-size:clamp(4rem,10vw,8rem);
+      line-height:1; min-height:320px;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:1rem;
+    }
+    .about-main-card p {
+      font-family:'Lora',serif; font-style:italic;
+      font-size:clamp(.9rem,2vw,1.1rem); color:var(--brown-lt);
+      line-height:1.6;
     }
 
-    .services-header {
-      text-align: center;
-      margin-bottom: 4rem;
+    .about-badge {
+      position:absolute; bottom:-1.2rem; right:-1rem;
+      background:var(--bordeaux); color:var(--white);
+      border-radius:1.2rem; padding:1rem 1.4rem;
+      text-align:center; box-shadow:var(--shadow-md);
+    }
+    .about-badge strong { display:block; font-family:'Playfair Display',serif; font-size:1.8rem; }
+    .about-badge span { font-size:.72rem; letter-spacing:.06em; opacity:.85; }
+
+    .about-values { display:flex; flex-direction:column; gap:1.2rem; margin-top:2rem; }
+    .value-item {
+      display:flex; align-items:flex-start; gap:1rem;
+      padding:1.2rem 1.4rem;
+      background:var(--cream); border-radius:1rem;
+      border-left:3px solid var(--caramel);
+    }
+    .value-icon { font-size:1.4rem; flex-shrink:0; margin-top:.1rem; }
+    .value-title { font-weight:500; font-size:.9rem; color:var(--text); margin-bottom:.2rem; }
+    .value-desc { font-size:.82rem; color:var(--text-lt); line-height:1.55; }
+
+    /* ═══════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════ */
+    #services { background:var(--cream); }
+
+    .services-intro {
+      display:grid; grid-template-columns:1fr 1fr; gap:3rem;
+      align-items:end; margin-bottom:3.5rem;
     }
 
     .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-bottom: 4rem;
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.5rem; margin-bottom:2.5rem;
     }
 
     .service-card {
-      background: var(--cream);
-      border-radius: 1.5rem;
-      padding: 2.5rem 2rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: 1px solid var(--beige-dark);
+      background:var(--white);
+      border-radius:1.8rem; padding:2rem 1.8rem;
+      border:1.5px solid transparent;
+      position:relative; overflow:hidden;
+      /* NO transform on hover — only shadow & border */
+      transition: box-shadow .25s, border-color .25s;
     }
-
+    .service-card::before {
+      content:''; position:absolute; inset:0;
+      background:var(--cream-warm); opacity:0; transition:opacity .25s;
+      pointer-events:none;
+    }
     .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(92, 61, 46, 0.12);
+      box-shadow:var(--shadow-md);
+      border-color:var(--rose-dk);
     }
+    .service-card:hover::before { opacity:.35; }
 
-    .service-card.featured {
-      background: var(--red);
-      border-color: var(--red);
-      color: var(--white);
+    .service-card.hero-card {
+      background: linear-gradient(150deg, var(--bordeaux) 0%, var(--bordeaux-dk) 100%);
+      color:var(--white); border-color:transparent;
     }
+    .service-card.hero-card:hover { border-color:var(--caramel-lt); }
+    .service-card.hero-card::before { background:rgba(255,255,255,.06); }
 
-    .service-card.featured .service-price,
-    .service-card.featured .service-name,
-    .service-card.featured .service-desc,
-    .service-card.featured .service-badge {
-      color: rgba(255,255,255,0.9);
+    .sc-ribbon {
+      position:absolute; top:1rem; right:1rem;
+      background:var(--caramel); color:var(--white);
+      font-size:.65rem; font-weight:600; letter-spacing:.08em;
+      text-transform:uppercase; padding:.3rem .7rem;
+      border-radius:2rem;
     }
+    .hero-card .sc-ribbon { background:rgba(255,255,255,.25); }
 
-    .service-card.featured .service-name { color: var(--white); }
-
-    .service-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--red);
-      font-weight: 500;
-      margin-bottom: 1rem;
-      background: rgba(184, 76, 60, 0.1);
-      padding: 0.3rem 0.8rem;
-      border-radius: 2rem;
+    .sc-emoji { font-size:2.2rem; margin-bottom:.8rem; display:block; }
+    .sc-name {
+      font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:600;
+      color:var(--text); margin-bottom:.5rem;
     }
+    .hero-card .sc-name { color:var(--white); }
+    .sc-desc { font-size:.83rem; color:var(--text-lt); line-height:1.6; margin-bottom:1.5rem; }
+    .hero-card .sc-desc { color:rgba(255,255,255,.75); }
 
-    .service-card.featured .service-badge {
-      background: rgba(255,255,255,0.2);
-      color: var(--white);
+    .sc-price {
+      font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:700;
+      color:var(--bordeaux);
     }
+    .hero-card .sc-price { color:var(--white); }
+    .sc-price sub { font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:400; color:var(--text-lt); margin-left:.2rem; }
+    .hero-card .sc-price sub { color:rgba(255,255,255,.65); }
 
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      display: block;
+    .sc-list {
+      margin-top:1.4rem; padding-top:1.4rem;
+      border-top:1px solid var(--cream-warm);
+      list-style:none; display:flex; flex-direction:column; gap:.45rem;
     }
-
-    .service-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.6rem;
+    .hero-card .sc-list { border-top-color:rgba(255,255,255,.2); }
+    .sc-list li {
+      font-size:.8rem; color:var(--text-lt);
+      display:flex; align-items:center; gap:.5rem;
     }
+    .hero-card .sc-list li { color:rgba(255,255,255,.75); }
+    .sc-list li::before { content:'✦'; color:var(--caramel); font-size:.55rem; }
+    .hero-card .sc-list li::before { color:rgba(255,255,255,.5); }
 
-    .service-desc {
-      font-size: 0.88rem;
-      color: var(--text-light);
-      line-height: 1.65;
-      margin-bottom: 1.5rem;
+    /* Petites gourmandises */
+    .extras-band {
+      background: linear-gradient(135deg, var(--cream-warm) 0%, var(--rose) 100%);
+      border-radius:2rem; padding:2.5rem;
     }
-
-    .service-price {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 600;
-      color: var(--red-dark);
+    .extras-header { text-align:center; margin-bottom:1.8rem; }
+    .extras-header h3 {
+      font-family:'Playfair Display',serif; font-size:1.5rem; font-style:italic;
+      color:var(--bordeaux); margin-bottom:.3rem;
     }
+    .extras-header p { font-size:.83rem; color:var(--text-lt); }
 
-    .service-price span {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--text-light);
-      margin-left: 0.3rem;
+    .extras-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:.9rem;
     }
-
-    .service-card.featured .service-price { color: var(--white); }
-    .service-card.featured .service-price span { color: rgba(255,255,255,0.7); }
-
-    .service-includes {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--beige-dark);
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .extra-pill {
+      background:var(--white); border-radius:1rem;
+      padding:1.1rem .9rem; text-align:center;
+      border:1.5px solid transparent;
+      /* Static card — no hover movement */
+      transition: box-shadow .2s, border-color .2s;
     }
-
-    .service-card.featured .service-includes {
-      border-top-color: rgba(255,255,255,0.25);
+    .extra-pill:hover {
+      box-shadow:var(--shadow-sm); border-color:var(--rose-dk);
     }
+    .ep-icon { font-size:1.5rem; margin-bottom:.35rem; }
+    .ep-name { font-size:.78rem; font-weight:500; color:var(--text); margin-bottom:.2rem; }
+    .ep-price { font-size:.8rem; color:var(--bordeaux); font-weight:600; }
 
-    .service-includes li {
-      font-size: 0.83rem;
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .service-card.featured .service-includes li { color: rgba(255,255,255,0.8); }
-
-    .service-includes li::before {
-      content: '✦';
-      color: var(--red);
-      font-size: 0.6rem;
-    }
-
-    .service-card.featured .service-includes li::before { color: rgba(255,255,255,0.7); }
-
-    /* ADD-ONS */
-    .addons-section {
-      background: var(--beige);
-      border-radius: 2rem;
-      padding: 3rem;
-    }
-
-    .addons-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .addons-sub {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-    }
-
-    .addons-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-
-    .addon-item {
-      background: var(--white);
-      border-radius: 1rem;
-      padding: 1.2rem;
-      text-align: center;
-      transition: transform 0.2s;
-    }
-
-    .addon-item:hover { transform: translateY(-3px); }
-
-    .addon-icon { font-size: 1.6rem; display: block; margin-bottom: 0.4rem; }
-    .addon-name { font-size: 0.8rem; font-weight: 500; color: var(--text); margin-bottom: 0.2rem; }
-    .addon-price { font-size: 0.85rem; color: var(--red); font-weight: 600; }
-
-    /* ── GALLERY ── */
-    #gallery {
-      background: var(--cream);
-    }
+    /* ═══════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════ */
+    #gallery { background:var(--white); }
 
     .gallery-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 3rem;
+      display:flex; align-items:flex-end; justify-content:space-between;
+      flex-wrap:wrap; gap:1.5rem; margin-bottom:2.5rem;
+    }
+    .gallery-ig {
+      display:flex; align-items:center; gap:.5rem;
+      font-size:.83rem; color:var(--bordeaux); font-weight:500;
+      border-bottom:1px solid var(--bordeaux); padding-bottom:.1rem;
+      transition:color .2s, border-color .2s;
+    }
+    .gallery-ig:hover { color:var(--caramel); border-color:var(--caramel); }
+
+    /* True masonry-like grid */
+    .gallery-grid {
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      grid-auto-rows:60px;
+      gap:.9rem;
     }
 
-    .gallery-link {
-      font-size: 0.85rem;
-      color: var(--red);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-weight: 500;
-      border-bottom: 1px solid var(--red);
-      padding-bottom: 0.1rem;
-      transition: color 0.2s;
+    .gi { border-radius:1.5rem; overflow:hidden; position:relative; cursor:pointer; }
+    .gi:hover .gi-overlay { opacity:1; }
+
+    .gi-inner {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:3rem; transition:transform .4s;
+    }
+    .gi:hover .gi-inner { transform:scale(1.04); }
+
+    .gi-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(44,26,14,.65) 0%, transparent 55%);
+      opacity:0; transition:opacity .3s;
+      display:flex; align-items:flex-end; padding:1rem 1.2rem;
+    }
+    .gi-label {
+      font-family:'Lora',serif; font-style:italic;
+      font-size:.9rem; color:var(--white);
     }
 
-    .gallery-link:hover { color: var(--red-dark); }
+    /* Placement */
+    .gi-1 { grid-column:1/6;  grid-row:1/7;  border-radius:3rem 1.5rem 1.5rem 3rem; }
+    .gi-2 { grid-column:6/9;  grid-row:1/5; }
+    .gi-3 { grid-column:9/13; grid-row:1/4; }
+    .gi-4 { grid-column:9/13; grid-row:4/7; }
+    .gi-5 { grid-column:6/9;  grid-row:5/9; }
+    .gi-6 { grid-column:1/5;  grid-row:7/11; }
+    .gi-7 { grid-column:5/9;  grid-row:9/13; border-radius:1.5rem 1.5rem 3rem 1.5rem; }
+    .gi-8 { grid-column:9/13; grid-row:7/13; border-radius:1.5rem 1.5rem 3rem 1.5rem; }
 
-    .gallery-masonry {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto;
-      gap: 1.2rem;
-    }
+    .gcolor-1 { background:linear-gradient(145deg,#D4B890,#C49A70); }
+    .gcolor-2 { background:linear-gradient(145deg,#C84A38,#8C2A1E); }
+    .gcolor-3 { background:linear-gradient(145deg,#E8D0B8,#D4B898); }
+    .gcolor-4 { background:linear-gradient(145deg,#D4A060,#B8804A); }
+    .gcolor-5 { background:linear-gradient(145deg,#F0DDD0,#E0C4B0); }
+    .gcolor-6 { background:linear-gradient(145deg,#C84A38,#9C3A28); }
+    .gcolor-7 { background:linear-gradient(145deg,#D4B890,#B89068); }
+    .gcolor-8 { background:linear-gradient(145deg,#B84C3A,#8C2A20); }
 
-    .gallery-item {
-      border-radius: 1.2rem;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-    }
+    .gallery-cta { margin-top:2rem; text-align:center; }
 
-    .gallery-item:nth-child(1) { grid-row: span 2; border-radius: 3rem 1.2rem 1.2rem 1.2rem; }
-    .gallery-item:nth-child(4) { grid-row: span 2; border-radius: 1.2rem 1.2rem 3rem 1.2rem; }
-    .gallery-item:nth-child(6) { grid-column: span 2; }
-
-    .gallery-img {
-      width: 100%;
-      height: 100%;
-      min-height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      transition: transform 0.4s;
-      position: relative;
-    }
-
-    .gallery-item:hover .gallery-img { transform: scale(1.05); }
-
-    .gallery-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(92, 61, 46, 0.7) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      display: flex;
-      align-items: flex-end;
-      padding: 1.2rem;
-    }
-
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-
-    .gallery-caption {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--white);
-    }
-
-    .gi1 { background: linear-gradient(135deg, #D4B896 0%, #C49A78 100%); }
-    .gi2 { background: linear-gradient(135deg, #E8D5C4 0%, #D4B896 100%); }
-    .gi3 { background: linear-gradient(135deg, #B84C3C 0%, #8F3527 100%); }
-    .gi4 { background: linear-gradient(135deg, #C49A78 0%, #8F6545 100%); }
-    .gi5 { background: linear-gradient(135deg, #D4C4B0 0%, #C4B0A0 100%); }
-    .gi6 { background: linear-gradient(135deg, #B84C3C 20%, #D4614E 100%); }
-    .gi7 { background: linear-gradient(135deg, #E8DDD0 0%, #D4C4B0 100%); }
-
-    /* ── PROCESS ── */
+    /* ═══════════════════════════════════
+       PROCESS BANNER
+    ═══════════════════════════════════ */
     #process {
-      background: var(--red-dark);
-      color: var(--white);
-      position: relative;
-      overflow: hidden;
+      background:linear-gradient(135deg, var(--bordeaux-dk) 0%, var(--bordeaux) 100%);
+      color:var(--white); position:relative; overflow:hidden;
     }
-
     #process::before {
-      content: '';
-      position: absolute;
-      bottom: -5rem;
-      left: -5rem;
-      width: 25rem;
-      height: 25rem;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
+      content:''; position:absolute;
+      width:40rem; height:40rem; border-radius:50%;
+      background:rgba(255,255,255,.04);
+      top:-10rem; right:-10rem;
     }
-
     #process::after {
-      content: '';
-      position: absolute;
-      top: -3rem;
-      right: -3rem;
-      width: 18rem;
-      height: 18rem;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
+      content:''; position:absolute;
+      width:25rem; height:25rem; border-radius:50%;
+      background:rgba(255,255,255,.04);
+      bottom:-8rem; left:-5rem;
+    }
+    #process .eyebrow { color:rgba(255,255,255,.55); }
+    #process .eyebrow::before { background:rgba(255,255,255,.4); }
+    #process h2.sec-title { color:var(--white); }
+    #process h2.sec-title em { color:var(--caramel-lt); }
+
+    .process-steps {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1.5rem; margin-top:3.5rem; position:relative; z-index:2;
+    }
+    .process-step { text-align:center; }
+    .ps-num {
+      width:4rem; height:4rem; border-radius:50%;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700;
+      color:var(--white); margin:0 auto 1rem;
+    }
+    .ps-icon { font-size:1.5rem; display:block; margin-bottom:.8rem; }
+    .ps-title {
+      font-family:'Playfair Display',serif; font-size:1rem; font-weight:600;
+      color:var(--white); margin-bottom:.4rem;
+    }
+    .ps-desc { font-size:.8rem; color:rgba(255,255,255,.65); line-height:1.6; }
+
+    /* ═══════════════════════════════════
+       REVIEWS
+    ═══════════════════════════════════ */
+    #reviews { background:var(--cream); }
+
+    .reviews-top {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:3rem; align-items:center; margin-bottom:3.5rem;
     }
 
-    #process .section-eyebrow { color: rgba(255,255,255,0.6); }
-    #process .section-eyebrow::before { background: rgba(255,255,255,0.4); }
-    #process .section-title { color: var(--white); }
-    #process .section-title em { color: var(--beige); }
-    #process .section-sub { color: rgba(255,255,255,0.7); }
-
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      margin-top: 4rem;
-      position: relative;
-      z-index: 2;
+    .reviews-score {
+      display:flex; flex-direction:column; align-items:flex-start; gap:.4rem;
     }
-
-    .process-line {
-      position: absolute;
-      top: 2.2rem;
-      left: 15%;
-      right: 15%;
-      height: 1px;
-      background: rgba(255,255,255,0.2);
-      z-index: 1;
+    .score-big {
+      font-family:'Playfair Display',serif; font-size:5rem; font-weight:700;
+      color:var(--bordeaux); line-height:1;
     }
+    .score-stars { color:var(--caramel); font-size:1.4rem; letter-spacing:.1em; }
+    .score-sub { font-size:.82rem; color:var(--text-lt); }
 
-    .process-step { text-align: center; position: relative; z-index: 2; }
-
-    .process-num {
-      width: 4.5rem;
-      height: 4.5rem;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--white);
-      margin: 0 auto 1.2rem;
+    .score-bars { display:flex; flex-direction:column; gap:.5rem; }
+    .score-bar {
+      display:flex; align-items:center; gap:.8rem; font-size:.78rem;
     }
-
-    .process-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.5rem;
+    .score-bar-label { width:1.5rem; color:var(--text-lt); text-align:right; }
+    .score-bar-track {
+      flex:1; height:6px; background:var(--cream-warm); border-radius:3px; overflow:hidden;
     }
-
-    .process-desc {
-      font-size: 0.83rem;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.6;
+    .score-bar-fill {
+      height:100%; background:var(--caramel); border-radius:3px; transition:width .8s;
     }
-
-    /* ── REVIEWS ── */
-    #reviews {
-      background: var(--white);
-    }
-
-    .reviews-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      margin-bottom: 4rem;
-    }
-
-    .reviews-stats {
-      display: flex;
-      gap: 3rem;
-    }
-
-    .review-stat .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--red);
-      line-height: 1;
-    }
-
-    .review-stat .stat-label {
-      font-size: 0.8rem;
-      color: var(--text-light);
-      margin-top: 0.3rem;
-    }
+    .score-bar-count { width:1.5rem; color:var(--text-lt); }
 
     .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.8rem;
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
     }
 
     .review-card {
-      background: var(--cream);
-      border-radius: 1.5rem;
-      padding: 2rem;
-      border: 1px solid var(--beige-dark);
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
+      background:var(--white); border-radius:1.8rem;
+      padding:1.8rem; position:relative; overflow:hidden;
+      border:1.5px solid transparent;
+      transition: box-shadow .25s, border-color .25s;
     }
-
     .review-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.08);
+      box-shadow:var(--shadow-md); border-color:var(--rose-dk);
+    }
+    .review-card.highlight {
+      background: linear-gradient(145deg, var(--cream-warm), var(--rose));
     }
 
-    .review-card.featured-review {
-      background: var(--beige);
-      grid-column: span 1;
+    .rv-quote {
+      position:absolute; top:1rem; right:1.2rem;
+      font-family:'Playfair Display',serif; font-size:5rem; line-height:1;
+      color:var(--rose); font-style:italic; pointer-events:none; opacity:.6;
     }
-
-    .review-quote {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      font-family: 'Playfair Display', serif;
-      font-size: 4rem;
-      line-height: 1;
-      color: var(--beige-dark);
-      font-style: italic;
-      pointer-events: none;
+    .rv-stars { color:var(--caramel); font-size:.85rem; letter-spacing:.08em; margin-bottom:.8rem; }
+    .rv-text {
+      font-family:'Lora',serif; font-style:italic;
+      font-size:.95rem; line-height:1.7; color:var(--text-md);
+      margin-bottom:1.3rem; position:relative; z-index:1;
     }
-
-    .review-stars {
-      color: var(--red);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      letter-spacing: 0.1em;
+    .rv-tag {
+      display:inline-block; font-size:.68rem; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--caramel); font-weight:500;
+      background:rgba(200,133,74,.1); padding:.25rem .7rem; border-radius:2rem;
+      margin-bottom:.8rem;
     }
-
-    .review-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      font-style: italic;
-      line-height: 1.65;
-      color: var(--text);
-      margin-bottom: 1.5rem;
+    .rv-author { display:flex; align-items:center; gap:.7rem; }
+    .rv-avatar {
+      width:2.2rem; height:2.2rem; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.85rem; font-weight:600; color:var(--white); flex-shrink:0;
     }
+    .av-a { background:var(--bordeaux); }
+    .av-b { background:var(--caramel); }
+    .av-c { background:var(--bordeaux-lt); }
+    .av-d { background:var(--brown-lt); }
+    .av-e { background:#9A6A50; }
+    .av-f { background:var(--caramel); }
 
-    .review-author {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
+    .rv-author-info strong { display:block; font-size:.83rem; color:var(--text); }
+    .rv-author-info span { font-size:.72rem; color:var(--text-lt); }
 
-    .review-avatar {
-      width: 2.4rem;
-      height: 2.4rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .av1 { background: var(--red); }
-    .av2 { background: var(--brown); }
-    .av3 { background: var(--red-dark); }
-    .av4 { background: var(--brown-light); }
-    .av5 { background: var(--red-light); }
-
-    .review-author-info strong {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .review-author-info span {
-      font-size: 0.75rem;
-      color: var(--text-light);
-    }
-
-    /* ── CONTACT / CTA ── */
+    /* ═══════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════ */
     #contact {
-      background: var(--cream);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
+      background:var(--white);
+      display:grid; grid-template-columns:1fr 1.4fr;
+      gap: clamp(2rem,6vw,6rem); align-items:start;
     }
 
-    .contact-visual {
-      background: var(--beige);
-      border-radius: 3rem;
-      padding: 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    .contact-card {
+      background: linear-gradient(150deg, var(--cream-warm) 0%, var(--rose) 100%);
+      border-radius:2.5rem; padding:2.5rem;
+      position:relative; overflow:hidden;
     }
-
-    .contact-visual::before {
-      content: '';
-      position: absolute;
-      top: -3rem;
-      right: -3rem;
-      width: 10rem;
-      height: 10rem;
-      border-radius: 50%;
-      background: var(--red);
-      opacity: 0.1;
+    .contact-card::before {
+      content:''; position:absolute; top:-3rem; right:-3rem;
+      width:10rem; height:10rem; border-radius:50%;
+      background:var(--bordeaux); opacity:.08;
     }
-
-    .contact-visual-emoji { font-size: 5rem; display: block; margin-bottom: 1rem; }
-
-    .contact-info { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem; }
-
-    .contact-info-item {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.9rem;
-      color: var(--text);
-      background: var(--white);
-      padding: 0.8rem 1.2rem;
-      border-radius: 0.8rem;
+    .contact-card-icon { font-size:3.5rem; margin-bottom:1rem; }
+    .contact-card h3 {
+      font-family:'Playfair Display',serif; font-size:1.6rem; font-style:italic;
+      color:var(--bordeaux); margin-bottom:.4rem;
     }
-
-    .contact-info-item .ci-icon { font-size: 1.1rem; }
-
-    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
-
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-
-    .form-group label {
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      font-weight: 500;
+    .contact-card p {
+      font-size:.85rem; color:var(--text-lt);
+      font-family:'Lora',serif; font-style:italic; margin-bottom:1.8rem;
     }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: var(--white);
-      border: 1.5px solid var(--beige-dark);
-      border-radius: 0.75rem;
-      padding: 0.85rem 1rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text);
-      transition: border-color 0.2s;
-      outline: none;
-      width: 100%;
+    .contact-details { display:flex; flex-direction:column; gap:.7rem; }
+    .contact-detail {
+      display:flex; align-items:center; gap:.8rem;
+      background:var(--white); border-radius:.8rem;
+      padding:.7rem 1rem; font-size:.83rem; color:var(--text);
     }
+    .cd-icon { font-size:1rem; flex-shrink:0; }
+    .cd-label { font-size:.68rem; color:var(--text-lt); display:block; margin-bottom:.1rem; }
+    .cd-val { font-weight:500; }
 
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--red);
+    /* Form */
+    .contact-form { display:flex; flex-direction:column; gap:1.1rem; }
+    .form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .fgroup { display:flex; flex-direction:column; gap:.35rem; }
+    .fgroup label {
+      font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+      color:var(--text-lt); font-weight:500;
     }
-
-    .form-group textarea { resize: vertical; min-height: 100px; }
-
-    .form-submit {
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      padding: 1.1rem 2.5rem;
-      border-radius: 3rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      align-self: flex-start;
-      box-shadow: 0 4px 20px rgba(184, 76, 60, 0.3);
+    .fgroup input,
+    .fgroup select,
+    .fgroup textarea {
+      background:var(--cream); border:1.5px solid rgba(200,133,74,.25);
+      border-radius:.85rem; padding:.85rem 1rem;
+      font-family:'DM Sans',sans-serif; font-size:.88rem; color:var(--text);
+      outline:none; width:100%; transition:border-color .2s, background .2s;
+      -webkit-appearance: none;
     }
-
-    .form-submit:hover {
-      background: var(--red-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(184, 76, 60, 0.4);
+    .fgroup input:focus,
+    .fgroup select:focus,
+    .fgroup textarea:focus {
+      border-color:var(--bordeaux); background:var(--white);
     }
+    .fgroup textarea { resize:vertical; min-height:100px; }
 
-    /* ── FOOTER ── */
+    .form-footer {
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:1rem;
+    }
+    .form-note { font-size:.75rem; color:var(--text-lt); font-family:'Lora',serif; font-style:italic; }
+
+    /* ═══════════════════════════════════
+       POLICIES
+    ═══════════════════════════════════ */
+    #policies { background:var(--cream-warm); }
+    .policies-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1.5rem; margin-top:3rem;
+    }
+    .policy-card {
+      background:var(--white); border-radius:1.5rem;
+      padding:1.8rem; border-top:3px solid var(--caramel);
+    }
+    .policy-icon { font-size:1.8rem; margin-bottom:.7rem; }
+    .policy-title {
+      font-family:'Playfair Display',serif; font-size:1rem; font-weight:600;
+      color:var(--text); margin-bottom:.8rem;
+    }
+    .policy-list { list-style:none; display:flex; flex-direction:column; gap:.45rem; }
+    .policy-list li {
+      font-size:.8rem; color:var(--text-lt); line-height:1.55;
+      display:flex; align-items:flex-start; gap:.5rem;
+    }
+    .policy-list li::before { content:'→'; color:var(--caramel); flex-shrink:0; }
+
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
     footer {
-      background: var(--text);
-      color: rgba(255,255,255,0.8);
-      padding: 4rem 6rem;
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 4rem;
+      background:var(--brown); color:rgba(255,255,255,.8);
+      padding: clamp(3rem,6vw,4.5rem) clamp(1.2rem,6vw,6rem) 2rem;
+      display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem;
     }
-
-    .footer-brand .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      color: var(--white);
-      font-weight: 600;
-      margin-bottom: 0.8rem;
+    .ft-brand .logo {
+      font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;
+      color:var(--white); margin-bottom:.7rem;
     }
-
-    .footer-brand .logo span { font-style: italic; color: var(--red-light); }
-
-    .footer-brand p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      max-width: 280px;
-      margin-bottom: 1.5rem;
+    .ft-brand .logo span { font-style:italic; color:var(--caramel-lt); }
+    .ft-brand p {
+      font-family:'Lora',serif; font-style:italic;
+      font-size:.9rem; color:rgba(255,255,255,.5); line-height:1.65;
+      max-width:260px; margin-bottom:1.5rem;
     }
-
-    .footer-social {
-      display: flex;
-      gap: 0.8rem;
+    .ft-social { display:flex; gap:.7rem; }
+    .soc-btn {
+      width:2.4rem; height:2.4rem; border-radius:50%;
+      background:rgba(255,255,255,.1);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.95rem; transition:background .2s;
     }
+    .soc-btn:hover { background:var(--bordeaux-lt); }
 
-    .social-btn {
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: background 0.2s;
+    .ft-col h4 {
+      font-family:'Playfair Display',serif; font-size:.95rem; font-weight:600;
+      color:var(--white); margin-bottom:1rem;
     }
-
-    .social-btn:hover { background: var(--red); }
-
-    .footer-col h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      color: var(--white);
-      margin-bottom: 1.2rem;
-      font-weight: 600;
-    }
-
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-
-    .footer-col ul li a {
-      color: rgba(255,255,255,0.55);
-      text-decoration: none;
-      font-size: 0.85rem;
-      transition: color 0.2s;
-    }
-
-    .footer-col ul li a:hover { color: var(--red-light); }
+    .ft-col ul { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+    .ft-col ul li a { font-size:.82rem; color:rgba(255,255,255,.5); transition:color .2s; }
+    .ft-col ul li a:hover { color:var(--caramel-lt); }
 
     .footer-bottom {
-      background: var(--text);
-      padding: 1.5rem 6rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      background:var(--brown); padding:1.5rem clamp(1.2rem,6vw,6rem);
+      border-top:1px solid rgba(255,255,255,.08);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
+    }
+    .footer-bottom p { font-size:.75rem; color:rgba(255,255,255,.3); }
+
+    /* ═══════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════ */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s, transform .7s; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE — TABLET
+    ═══════════════════════════════════ */
+    @media(max-width:1024px) {
+      #hero { grid-template-columns:1fr; }
+      .hero-right { display:none; }
+      .hero-left { padding:4rem 2rem 3rem; }
+
+      #about { grid-template-columns:1fr; }
+      .about-visual { max-width:400px; margin:0 auto; }
+
+      .services-intro { grid-template-columns:1fr; gap:1rem; }
+      .services-grid { grid-template-columns:1fr 1fr; }
+      .extras-grid { grid-template-columns:repeat(4,1fr); }
+
+      /* Gallery simplified on tablet */
+      .gallery-grid {
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        grid-auto-rows:180px; gap:.9rem;
+      }
+      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7,.gi-8 {
+        grid-column:auto; grid-row:auto; border-radius:1.5rem;
+      }
+      .gi-1 { grid-row:span 2; }
+
+      .process-steps { grid-template-columns:1fr 1fr; }
+      .reviews-top { grid-template-columns:1fr; }
+      .reviews-grid { grid-template-columns:1fr 1fr; }
+      #contact { grid-template-columns:1fr; }
+      .policies-grid { grid-template-columns:1fr 1fr; }
+      footer { grid-template-columns:1fr 1fr; gap:2rem; }
     }
 
-    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+    /* ═══════════════════════════════════
+       RESPONSIVE — MOBILE
+    ═══════════════════════════════════ */
+    @media(max-width:640px) {
+      nav { padding:0 1.2rem; }
+      .nav-links { display:none !important; }
+      .hamburger { display:flex; }
 
-    /* ── SCROLL ANIMATIONS ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+      .section { padding:3.5rem 1.2rem; }
+      #hero { padding-top:70px; }
+      .hero-left { padding:2.5rem 1.2rem 2rem; }
+      .hero-btns { flex-direction:column; align-items:flex-start; }
+      .hero-btns .btn { width:100%; justify-content:center; }
+      .hero-trust { flex-direction:column; align-items:flex-start; gap:.7rem; }
+      .trust-dot { display:none; }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      #about { padding:3.5rem 1.2rem; }
+      .about-badge { right:0; }
 
-    /* ── MOBILE HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
+      .services-intro { margin-bottom:2rem; }
+      .services-grid { grid-template-columns:1fr; }
+      .extras-grid { grid-template-columns:1fr 1fr; }
 
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
+      .gallery-grid {
+        grid-template-columns:1fr 1fr;
+        grid-auto-rows:130px; gap:.7rem;
+      }
+      .gi-1 { grid-row:span 2; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1024px) {
-      section { padding: 5rem 3rem; }
-      .services-grid { grid-template-columns: 1fr 1fr; }
-      .addons-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .gallery-masonry { grid-template-columns: repeat(2, 1fr); }
-      .gallery-item:nth-child(4) { grid-row: span 1; }
-      footer { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-    }
+      .process-steps { grid-template-columns:1fr 1fr; gap:1.2rem; }
 
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 80px; }
-      .hero-left { padding: 3rem 1.5rem 2rem; }
-      .hero-right { display: none; }
-      section { padding: 4rem 1.5rem; }
-      .services-grid { grid-template-columns: 1fr; }
-      .addons-grid { grid-template-columns: repeat(2, 1fr); }
-      .gallery-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .gallery-masonry { grid-template-columns: 1fr 1fr; }
-      .gallery-item:nth-child(1) { border-radius: 1.5rem; grid-row: span 1; }
-      .gallery-item:nth-child(6) { grid-column: span 1; }
-      .process-grid { grid-template-columns: 1fr 1fr; }
-      .reviews-header { grid-template-columns: 1fr; gap: 2rem; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      #contact { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
-      .form-row { grid-template-columns: 1fr; }
-      footer { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
-      .footer-bottom { padding: 1.2rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .reviews-grid { grid-template-columns:1fr; }
+      .score-big { font-size:3.5rem; }
+
+      #contact { padding:3.5rem 1.2rem; }
+      .form-row2 { grid-template-columns:1fr; }
+      .form-footer { flex-direction:column; }
+      .btn.form-submit { width:100%; justify-content:center; }
+
+      .policies-grid { grid-template-columns:1fr; }
+
+      footer { grid-template-columns:1fr; gap:2rem; padding:3rem 1.2rem 1.5rem; }
+      .footer-bottom { flex-direction:column; text-align:center; padding:1.2rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- ══════════ NAV ══════════ -->
   <nav>
     <a href="#" class="nav-logo">Chi <span>Bakes</span></a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">À propos</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#gallery">Galerie</a></li>
       <li><a href="#reviews">Avis</a></li>
-      <li><a href="#contact" class="nav-cta">Commander</a></li>
+      <li><a href="#contact" class="nav-cta">Commander ✦</a></li>
     </ul>
-    <div class="hamburger" onclick="toggleMenu(this)">
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-bg-circle"></div>
-    <div class="hero-left reveal">
-      <div class="hero-eyebrow">Pâtisserie artisanale</div>
-      <h1>
-        Des gâteaux faits<br>
+  <!-- Mobile menu -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMenu()">À propos</a>
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#gallery" onclick="closeMenu()">Galerie</a>
+    <a href="#reviews" onclick="closeMenu()">Avis</a>
+    <a href="#contact" onclick="closeMenu()" class="btn btn-primary">Commander ✦</a>
+  </div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section id="hero">
+    <div class="hero-left">
+      <div class="eyebrow reveal">Pâtisserie artisanale</div>
+      <h1 class="reveal reveal-delay-1">
+        Des gâteaux créés<br>
         <em>avec amour</em>
       </h1>
-      <p class="hero-desc">
-        Chaque création est unique — pensée, façonnée et décorée à la main pour vos moments les plus précieux.
+      <p class="hero-tagline reveal reveal-delay-2">
+        Chaque création est unique — façonnée à la main, pensée pour vous, et conçue pour rendre votre moment inoubliable.
       </p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Commander un gâteau →</a>
-        <a href="#gallery" class="btn-outline">Voir la galerie</a>
+      <div class="hero-btns reveal reveal-delay-2">
+        <a href="#contact" class="btn btn-primary">Commander un gâteau →</a>
+        <a href="#gallery" class="btn btn-ghost">Voir la galerie</a>
+      </div>
+      <div class="hero-trust reveal reveal-delay-3">
+        <div class="trust-item">⭐ <strong>4.9/5</strong> de moyenne</div>
+        <div class="trust-dot"></div>
+        <div class="trust-item">🎂 <strong>120+</strong> créations</div>
+        <div class="trust-dot"></div>
+        <div class="trust-item">💌 Réponse sous <strong>48h</strong></div>
       </div>
     </div>
+
     <div class="hero-right">
-      <div class="hero-img-card">
-        <div class="cake-placeholder cp1">🎂</div>
-      </div>
-      <div class="hero-img-card">
-        <div class="cake-placeholder cp2">🌸</div>
-        <div class="float-badge">
-          <span class="badge-icon">⭐</span>
-          <div class="badge-text">
+      <div class="hcard">
+        <div class="hcard-inner hc1">🎂</div>
+        <div class="hero-float">
+          <span class="hf-icon">⭐</span>
+          <div class="hf-text">
             <strong>4.9 / 5</strong>
             <span>+120 avis clients</span>
           </div>
         </div>
       </div>
-      <div class="hero-img-card">
-        <div class="cake-placeholder cp3">🍰</div>
+      <div class="hcard">
+        <div class="hcard-inner hc2">🌸</div>
+      </div>
+      <div class="hcard">
+        <div class="hcard-inner hc3">🍰</div>
       </div>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="services-header reveal">
-      <div class="section-eyebrow">Nos créations</div>
-      <h2 class="section-title">Services & <em>Tarifs</em></h2>
-      <p class="section-sub">Chaque commande est unique. Je travaille avec vous pour créer le gâteau parfait pour votre événement.</p>
+  <!-- ══════════ ABOUT ══════════ -->
+  <section id="about" class="section">
+    <div class="about-visual reveal">
+      <div class="about-main-card">
+        <span>🫶</span>
+        <p>« Chaque gâteau porte une histoire.<br>Je mets tout mon cœur pour raconter la vôtre. »</p>
+      </div>
+      <div class="about-badge">
+        <strong>3+</strong>
+        <span>ans de passion</span>
+      </div>
     </div>
 
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <span class="service-badge">Bestseller</span>
-        <span class="service-icon">🎂</span>
-        <div class="service-name">Gâteau d'Anniversaire</div>
-        <div class="service-desc">Un gâteau sur mesure pour célébrer chaque anniversaire avec élégance et gourmandise.</div>
-        <div class="service-price">À partir de 55€ <span>/ gâteau</span></div>
-        <ul class="service-includes">
+    <div>
+      <div class="eyebrow reveal">Notre histoire</div>
+      <h2 class="sec-title reveal">Bienvenue chez <em>Chi Bakes</em></h2>
+      <p class="sec-sub reveal">
+        Chi Bakes, c'est une pâtisserie née d'une passion simple : offrir des gâteaux aussi beaux que délicieux, entièrement faits à la main, pour vos moments les plus précieux.
+      </p>
+
+      <div class="about-values">
+        <div class="value-item reveal">
+          <span class="value-icon">🌿</span>
+          <div>
+            <div class="value-title">Ingrédients de qualité</div>
+            <div class="value-desc">Je sélectionne des produits frais et de qualité pour chaque préparation. Pas de compromis sur la saveur.</div>
+          </div>
+        </div>
+        <div class="value-item reveal reveal-delay-1">
+          <span class="value-icon">🎨</span>
+          <div>
+            <div class="value-title">Créations 100% sur mesure</div>
+            <div class="value-desc">Chaque gâteau est unique. Votre vision, vos couleurs, votre thème — je m'adapte à vos envies.</div>
+          </div>
+        </div>
+        <div class="value-item reveal reveal-delay-2">
+          <span class="value-icon">💌</span>
+          <div>
+            <div class="value-title">Relation de confiance</div>
+            <div class="value-desc">Du premier message jusqu'à la livraison, vous êtes accompagné à chaque étape avec bienveillance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══════════ SERVICES ══════════ -->
+  <section id="services" class="section">
+    <div class="services-intro">
+      <div>
+        <div class="eyebrow reveal">Nos créations</div>
+        <h2 class="sec-title reveal">Services <em>&amp; Tarifs</em></h2>
+      </div>
+      <p class="sec-sub reveal">Toutes les commandes sont personnalisées. Contactez-moi pour un devis sur mesure adapté à votre événement.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="sc-ribbon">Bestseller</div>
+        <span class="sc-emoji">🎂</span>
+        <div class="sc-name">Gâteau d'Anniversaire</div>
+        <div class="sc-desc">Un gâteau signature pour célébrer chaque anniversaire avec élégance. Parfum, décoration et message entièrement personnalisés.</div>
+        <div class="sc-price">À partir de 55€<sub>/ création</sub></div>
+        <ul class="sc-list">
           <li>Parfum & fourrage au choix</li>
           <li>Décoration personnalisée</li>
           <li>Message inclus</li>
-          <li>6 à 8 parts</li>
+          <li>6 à 12 parts</li>
         </ul>
       </div>
 
-      <div class="service-card featured">
-        <span class="service-badge">✦ Populaire</span>
-        <span class="service-icon">💍</span>
-        <div class="service-name">Wedding Cake</div>
-        <div class="service-desc">Un gâteau de mariage inoubliable, pensé dans les moindres détails pour votre plus beau jour.</div>
-        <div class="service-price">À partir de 180€ <span>/ création</span></div>
-        <ul class="service-includes">
+      <div class="service-card hero-card reveal reveal-delay-1">
+        <div class="sc-ribbon">✦ Populaire</div>
+        <span class="sc-emoji">💍</span>
+        <div class="sc-name">Wedding Cake</div>
+        <div class="sc-desc">Le gâteau de votre plus beau jour. Une création inoubliable pensée dans les moindres détails pour votre mariage.</div>
+        <div class="sc-price">À partir de 180€<sub>/ création</sub></div>
+        <ul class="sc-list">
           <li>Consultation personnalisée</li>
           <li>Dégustation offerte</li>
           <li>Livraison incluse (région)</li>
-          <li>10 à 60 parts</li>
+          <li>10 à 80 parts</li>
         </ul>
       </div>
 
-      <div class="service-card">
-        <span class="service-badge">Tendance</span>
-        <span class="service-icon">🌸</span>
-        <div class="service-name">Gâteau Événement</div>
-        <div class="service-desc">Baby shower, gender reveal, baptême… des créations thématiques qui émerveillent vos invités.</div>
-        <div class="service-price">À partir de 70€ <span>/ gâteau</span></div>
-        <ul class="service-includes">
+      <div class="service-card reveal reveal-delay-2">
+        <div class="sc-ribbon">Tendance</div>
+        <span class="sc-emoji">🌸</span>
+        <div class="sc-name">Gâteau Événement</div>
+        <div class="sc-desc">Baby shower, baptême, gender reveal… Des créations thématiques qui racontent votre histoire et émerveillent vos invités.</div>
+        <div class="sc-price">À partir de 70€<sub>/ création</sub></div>
+        <ul class="sc-list">
           <li>Thème entièrement personnalisé</li>
-          <li>Toppers & décos artisanales</li>
-          <li>Couleurs au choix</li>
-          <li>8 à 12 parts</li>
+          <li>Toppers artisanaux inclus</li>
+          <li>Palette de couleurs au choix</li>
+          <li>8 à 20 parts</li>
         </ul>
       </div>
     </div>
 
-    <div class="addons-section reveal">
-      <div class="addons-title">Petites gourmandises</div>
-      <div class="addons-sub">Des extras pour compléter votre commande</div>
-      <div class="addons-grid">
-        <div class="addon-item">
-          <span class="addon-icon">🧁</span>
-          <div class="addon-name">Cupcakes</div>
-          <div class="addon-price">3€ / pièce</div>
+    <div class="extras-band reveal">
+      <div class="extras-header">
+        <h3>Petites gourmandises</h3>
+        <p>Pour compléter votre commande ou offrir en cadeaux</p>
+      </div>
+      <div class="extras-grid">
+        <div class="extra-pill">
+          <div class="ep-icon">🧁</div>
+          <div class="ep-name">Cupcakes</div>
+          <div class="ep-price">3€ / pièce</div>
         </div>
-        <div class="addon-item">
-          <span class="addon-icon">🍪</span>
-          <div class="addon-name">Cookies décorés</div>
-          <div class="addon-price">4€ / pièce</div>
+        <div class="extra-pill">
+          <div class="ep-icon">🍪</div>
+          <div class="ep-name">Cookies décorés</div>
+          <div class="ep-price">4€ / pièce</div>
         </div>
-        <div class="addon-item">
-          <span class="addon-icon">🍫</span>
-          <div class="addon-name">Cake pops</div>
-          <div class="addon-price">3.5€ / pièce</div>
+        <div class="extra-pill">
+          <div class="ep-icon">🍫</div>
+          <div class="ep-name">Cake pops</div>
+          <div class="ep-price">3.50€ / pièce</div>
         </div>
-        <div class="addon-item">
-          <span class="addon-icon">🌿</span>
-          <div class="addon-name">Cake en kit</div>
-          <div class="addon-price">À partir de 40€</div>
+        <div class="extra-pill">
+          <div class="ep-icon">🎁</div>
+          <div class="ep-name">Cake en kit</div>
+          <div class="ep-price">À partir de 40€</div>
         </div>
       </div>
     </div>
@@ -1225,180 +1063,220 @@
 
   <div class="divider"></div>
 
-  <!-- GALLERY -->
-  <section id="gallery">
+  <!-- ══════════ GALLERY ══════════ -->
+  <section id="gallery" class="section">
     <div class="gallery-header reveal">
       <div>
-        <div class="section-eyebrow">Mes créations</div>
-        <h2 class="section-title">La <em>Galerie</em></h2>
+        <div class="eyebrow">L'univers Chi Bakes</div>
+        <h2 class="sec-title">La <em>Galerie</em></h2>
       </div>
-      <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="gallery-link">
-        Voir Instagram ↗
+      <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="gallery-ig">
+        📸 @chi.bakes_ sur Instagram ↗
       </a>
     </div>
 
-    <div class="gallery-masonry reveal">
-      <div class="gallery-item">
-        <div class="gallery-img gi1">🎂</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Wedding Cake floral</span></div>
+    <div class="gallery-grid reveal">
+      <div class="gi gi-1">
+        <div class="gi-inner gcolor-1">🎂</div>
+        <div class="gi-overlay"><span class="gi-label">Wedding Cake floral</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi2">🌸</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Gâteau Baby Shower</span></div>
+      <div class="gi gi-2">
+        <div class="gi-inner gcolor-2">🌸</div>
+        <div class="gi-overlay"><span class="gi-label">Baby Shower</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi3" style="min-height:220px;">🍰</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Layer cake velours</span></div>
+      <div class="gi gi-3">
+        <div class="gi-inner gcolor-3">🍰</div>
+        <div class="gi-overlay"><span class="gi-label">Layer cake velours</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi4">🧁</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Cupcakes anniversaire</span></div>
+      <div class="gi gi-4">
+        <div class="gi-inner gcolor-4">🧁</div>
+        <div class="gi-overlay"><span class="gi-label">Cupcakes dorés</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi5">🎀</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Gâteau baptême</span></div>
+      <div class="gi gi-5">
+        <div class="gi-inner gcolor-5">🎀</div>
+        <div class="gi-overlay"><span class="gi-label">Baptême rose</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi6" style="min-height:200px;">💍</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Wedding Cake 3 étages</span></div>
+      <div class="gi gi-6">
+        <div class="gi-inner gcolor-6">💍</div>
+        <div class="gi-overlay"><span class="gi-label">Wedding 3 étages</span></div>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-img gi7">🌿</div>
-        <div class="gallery-overlay"><span class="gallery-caption">Naked cake boho</span></div>
+      <div class="gi gi-7">
+        <div class="gi-inner gcolor-7">🌿</div>
+        <div class="gi-overlay"><span class="gi-label">Naked cake boho</span></div>
       </div>
+      <div class="gi gi-8">
+        <div class="gi-inner gcolor-8">🎉</div>
+        <div class="gi-overlay"><span class="gi-label">Anniversaire festif</span></div>
+      </div>
+    </div>
+
+    <div class="gallery-cta reveal">
+      <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="btn btn-warm">
+        Voir toutes mes créations sur Instagram →
+      </a>
     </div>
   </section>
 
-  <!-- PROCESS -->
-  <section id="process">
-    <div style="text-align:center;" class="reveal">
-      <div class="section-eyebrow">Comment ça marche</div>
-      <h2 class="section-title">Commander en <em>4 étapes</em></h2>
-      <p class="section-sub" style="margin:0 auto;">Du premier contact jusqu'à la livraison, je prends soin de chaque détail.</p>
+  <!-- ══════════ PROCESS ══════════ -->
+  <section id="process" class="section section-center">
+    <div class="reveal">
+      <div class="eyebrow">Comment ça marche</div>
+      <h2 class="sec-title">Commander en <em>4 étapes</em></h2>
+      <p class="sec-sub" style="margin:0 auto; color:rgba(255,255,255,.65);">Du premier message jusqu'à la livraison, je prends soin de chaque détail.</p>
     </div>
-    <div class="process-grid reveal">
-      <div class="process-step">
-        <div class="process-num">01</div>
-        <div class="process-title">Prise de contact</div>
-        <div class="process-desc">Dites-moi tout : la date, le thème, le nombre de personnes et vos envies.</div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="ps-num">01</div>
+        <span class="ps-icon">💬</span>
+        <div class="ps-title">Prise de contact</div>
+        <div class="ps-desc">Dites-moi tout : la date, le thème, vos inspirations et le nombre d'invités.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">02</div>
-        <div class="process-title">Devis personnalisé</div>
-        <div class="process-desc">Je vous prépare un devis sur mesure et des suggestions de design sous 48h.</div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="ps-num">02</div>
+        <span class="ps-icon">✏️</span>
+        <div class="ps-title">Devis personnalisé</div>
+        <div class="ps-desc">Je vous réponds sous 48h avec un devis et des idées de design sur mesure.</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">03</div>
-        <div class="process-title">Validation & dépôt</div>
-        <div class="process-desc">Un acompte de 50% confirme votre commande. La magie peut commencer !</div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="ps-num">03</div>
+        <span class="ps-icon">✅</span>
+        <div class="ps-title">Validation & acompte</div>
+        <div class="ps-desc">Un acompte de 50% confirme la commande. La magie peut commencer !</div>
       </div>
-      <div class="process-step">
-        <div class="process-num">04</div>
-        <div class="process-title">Livraison</div>
-        <div class="process-desc">Votre gâteau est livré frais et prêt à épater vos invités le jour J.</div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="ps-num">04</div>
+        <span class="ps-icon">🎂</span>
+        <div class="ps-title">Livraison le jour J</div>
+        <div class="ps-desc">Votre gâteau arrive frais et prêt à épater vos invités.</div>
       </div>
+    </div>
+    <div style="margin-top:3rem;" class="reveal">
+      <a href="#contact" class="btn btn-warm" style="font-size:.95rem; padding:1rem 2.4rem;">
+        Commencer ma demande ✦
+      </a>
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section id="reviews">
-    <div class="reviews-header">
+  <!-- ══════════ REVIEWS ══════════ -->
+  <section id="reviews" class="section">
+    <div class="reviews-top">
+      <div>
+        <div class="eyebrow reveal">Ce qu'ils disent</div>
+        <h2 class="sec-title reveal">Avis <em>Clients</em></h2>
+        <p class="sec-sub reveal">Des familles, des couples, des amis — tous ont vécu un moment inoubliable grâce à Chi Bakes.</p>
+        <div style="margin-top:1.5rem;" class="reveal">
+          <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="btn btn-ghost" style="font-size:.82rem;">
+            Laisser un avis Instagram →
+          </a>
+        </div>
+      </div>
       <div class="reveal">
-        <div class="section-eyebrow">Ce qu'ils disent</div>
-        <h2 class="section-title">Avis <em>Clients</em></h2>
-        <p class="section-sub">Des familles, des couples, des amis — tous ont vécu un moment inoubliable.</p>
-      </div>
-      <div class="reviews-stats reveal">
-        <div class="review-stat">
-          <div class="stat-num">4.9</div>
-          <div class="stat-label">Note moyenne</div>
+        <div class="reviews-score">
+          <div class="score-big">4.9</div>
+          <div class="score-stars">★★★★★</div>
+          <div class="score-sub">Basé sur 120+ commandes</div>
         </div>
-        <div class="review-stat">
-          <div class="stat-num">120+</div>
-          <div class="stat-label">Commandes</div>
-        </div>
-        <div class="review-stat">
-          <div class="stat-num">98%</div>
-          <div class="stat-label">Clients satisfaits</div>
+        <div class="score-bars" style="margin-top:1.5rem;">
+          <div class="score-bar">
+            <span class="score-bar-label">5★</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:92%"></div></div>
+            <span class="score-bar-count">110</span>
+          </div>
+          <div class="score-bar">
+            <span class="score-bar-label">4★</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:7%"></div></div>
+            <span class="score-bar-count">8</span>
+          </div>
+          <div class="score-bar">
+            <span class="score-bar-label">3★</span>
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:2%"></div></div>
+            <span class="score-bar-count">2</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="reviews-grid reveal">
-      <div class="review-card">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Le gâteau de mariage était absolument magnifique et délicieux ! Chi a tout mis en œuvre pour que notre vision devienne réalité. Chaque invité nous a posé la question du pâtissier.</p>
-        <div class="review-author">
-          <div class="review-avatar av1">S</div>
-          <div class="review-author-info">
+    <div class="reviews-grid">
+      <div class="review-card highlight reveal">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">Mariage</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Le gâteau de mariage était absolument magnifique et si délicieux ! Chi a tout mis en œuvre pour que notre vision devienne réalité. Chaque invité nous a demandé le nom du pâtissier.</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-a">S</div>
+          <div class="rv-author-info">
             <strong>Sofia & Thomas</strong>
-            <span>Mariage — juin 2024</span>
+            <span>Mariage · juin 2024</span>
           </div>
         </div>
       </div>
 
-      <div class="review-card featured-review">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Pour les 1 an de ma fille, j'ai voulu quelque chose de spécial. Chi a créé un gâteau tellement beau qu'on n'osait presque pas le couper ! Goût exceptionnel, service parfait.</p>
-        <div class="review-author">
-          <div class="review-avatar av2">M</div>
-          <div class="review-author-info">
+      <div class="review-card reveal reveal-delay-1">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">Anniversaire</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Pour les 1 an de ma fille, j'ai voulu quelque chose de spécial. Chi a créé un gâteau tellement beau qu'on n'osait presque pas le couper ! Goût exceptionnel, service parfait.</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-b">M</div>
+          <div class="rv-author-info">
             <strong>Marie L.</strong>
-            <span>Anniversaire — mars 2025</span>
+            <span>Anniversaire · mars 2025</span>
           </div>
         </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Baby shower thème nature — un sans-faute. Les détails floraux en sucre étaient à couper le souffle. Chi est vraiment passionnée par son métier, ça se ressent dans chaque bouchée.</p>
-        <div class="review-author">
-          <div class="review-avatar av3">L</div>
-          <div class="review-author-info">
+      <div class="review-card reveal reveal-delay-2">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">Baby Shower</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Thème nature — un sans-faute. Les détails floraux en sucre étaient à couper le souffle. Chi est vraiment passionnée, ça se ressent dans chaque bouchée.</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-c">L</div>
+          <div class="rv-author-info">
             <strong>Laura D.</strong>
-            <span>Baby Shower — sept. 2024</span>
+            <span>Baby Shower · sept. 2024</span>
           </div>
         </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Un professionnalisme irréprochable et une gentillesse rare. Le gâteau était livré à l'heure, parfaitement emballé, et encore plus beau que sur les photos. Merci mille fois !</p>
-        <div class="review-author">
-          <div class="review-avatar av4">J</div>
-          <div class="review-author-info">
+      <div class="review-card reveal">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">Fiançailles</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Un professionnalisme irréprochable et une gentillesse rare. Le gâteau était livré à l'heure, parfaitement emballé, et encore plus beau que sur les photos. Merci mille fois !</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-d">J</div>
+          <div class="rv-author-info">
             <strong>Julie & Karim</strong>
-            <span>Fiançailles — déc. 2024</span>
+            <span>Fiançailles · déc. 2024</span>
           </div>
         </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Je recommande Chi Bakes les yeux fermés. Réactive, créative, et tellement à l'écoute. Notre gâteau d'anniversaire thème vintage était simplement parfait.</p>
-        <div class="review-author">
-          <div class="review-avatar av5">N</div>
-          <div class="review-author-info">
+      <div class="review-card reveal reveal-delay-1">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">Anniversaire</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Je recommande Chi Bakes les yeux fermés. Réactive, créative, tellement à l'écoute. Notre gâteau thème vintage était simplement parfait, exactement comme je l'imaginais.</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-e">N</div>
+          <div class="rv-author-info">
             <strong>Nadia B.</strong>
-            <span>Anniversaire — fév. 2025</span>
+            <span>Anniversaire · fév. 2025</span>
           </div>
         </div>
       </div>
 
-      <div class="review-card">
-        <div class="review-quote">"</div>
-        <div class="review-stars">★★★★★</div>
-        <p class="review-text">Commande de cupcakes pour un enterrement de vie de jeune fille — ils étaient adorables, personnalisés à la perfection et tellement bons. Tout le monde a adoré !</p>
-        <div class="review-author">
-          <div class="review-avatar av1">C</div>
-          <div class="review-author-info">
+      <div class="review-card reveal reveal-delay-2">
+        <div class="rv-quote">"</div>
+        <div class="rv-tag">EVJF</div>
+        <div class="rv-stars">★★★★★</div>
+        <p class="rv-text">Des cupcakes adorables, personnalisés à la perfection et tellement bons. Tout le monde a adoré, on m'a posé des questions toute la soirée. Une vraie valeur ajoutée à notre fête !</p>
+        <div class="rv-author">
+          <div class="rv-avatar av-f">C</div>
+          <div class="rv-author-info">
             <strong>Camille R.</strong>
-            <span>EVJF — jan. 2025</span>
+            <span>EVJF · janv. 2025</span>
           </div>
         </div>
       </div>
@@ -1407,108 +1285,182 @@
 
   <div class="divider"></div>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-visual reveal">
-      <span class="contact-visual-emoji">🍰</span>
-      <h3 style="font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--text); margin-bottom:0.5rem;">Parlons de<br><em style="color:var(--red);">votre gâteau</em></h3>
-      <p style="font-size:0.9rem; color:var(--text-light); font-family:'Cormorant Garamond',serif; font-style:italic; margin-top:0.5rem;">Je vous réponds sous 48h avec un devis personnalisé.</p>
-      <div class="contact-info">
-        <div class="contact-info-item">
-          <span class="ci-icon">📸</span>
-          <span>@chi.bakes_ sur Instagram</span>
+  <!-- ══════════ CONTACT ══════════ -->
+  <section id="contact" class="section">
+    <div class="contact-card reveal">
+      <div class="contact-card-icon">🍰</div>
+      <h3>Parlons de votre gâteau</h3>
+      <p>Je vous réponds sous 48h avec un devis personnalisé.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <span class="cd-icon">📸</span>
+          <div>
+            <span class="cd-label">Instagram</span>
+            <span class="cd-val">@chi.bakes_</span>
+          </div>
         </div>
-        <div class="contact-info-item">
-          <span class="ci-icon">⏱️</span>
-          <span>Commandes 3 à 4 semaines à l'avance</span>
+        <div class="contact-detail">
+          <span class="cd-icon">⏱️</span>
+          <div>
+            <span class="cd-label">Délai de commande</span>
+            <span class="cd-val">3 à 4 semaines à l'avance</span>
+          </div>
         </div>
-        <div class="contact-info-item">
-          <span class="ci-icon">🚗</span>
-          <span>Livraison disponible (région)</span>
+        <div class="contact-detail">
+          <span class="cd-icon">🚗</span>
+          <div>
+            <span class="cd-label">Livraison</span>
+            <span class="cd-val">Disponible en région</span>
+          </div>
         </div>
-        <div class="contact-info-item">
-          <span class="ci-icon">✨</span>
-          <span>Consultation gratuite</span>
+        <div class="contact-detail">
+          <span class="cd-icon">✨</span>
+          <div>
+            <span class="cd-label">Consultation</span>
+            <span class="cd-val">Gratuite & sans engagement</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="reveal">
-      <div class="section-eyebrow">Passer commande</div>
-      <h2 class="section-title" style="margin-bottom:1.5rem;">Faites <em>votre demande</em></h2>
+    <div class="reveal reveal-delay-1">
+      <div class="eyebrow" style="margin-bottom:.6rem;">Passer commande</div>
+      <h2 class="sec-title" style="margin-bottom:1.5rem;">Faites <em>votre demande</em></h2>
       <div class="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Votre prénom</label>
+        <div class="form-row2">
+          <div class="fgroup">
+            <label>Prénom</label>
             <input type="text" placeholder="Marie" />
           </div>
-          <div class="form-group">
-            <label>Votre email</label>
+          <div class="fgroup">
+            <label>Email</label>
             <input type="email" placeholder="marie@email.com" />
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Type de gâteau</label>
+        <div class="form-row2">
+          <div class="fgroup">
+            <label>Type de création</label>
             <select>
-              <option>Gâteau d'anniversaire</option>
-              <option>Wedding cake</option>
-              <option>Gâteau événement</option>
-              <option>Cupcakes / cookies</option>
-              <option>Autre</option>
+              <option>🎂 Gâteau d'anniversaire</option>
+              <option>💍 Wedding cake</option>
+              <option>🌸 Gâteau événement</option>
+              <option>🧁 Cupcakes / cookies</option>
+              <option>🎁 Autre</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="fgroup">
             <label>Date de l'événement</label>
             <input type="date" />
           </div>
         </div>
-        <div class="form-group">
-          <label>Nombre de personnes</label>
-          <select>
-            <option>Moins de 10 personnes</option>
-            <option>10 à 20 personnes</option>
-            <option>20 à 50 personnes</option>
-            <option>Plus de 50 personnes</option>
-          </select>
+        <div class="form-row2">
+          <div class="fgroup">
+            <label>Nombre de personnes</label>
+            <select>
+              <option>Moins de 10 personnes</option>
+              <option>10 à 20 personnes</option>
+              <option>20 à 50 personnes</option>
+              <option>Plus de 50 personnes</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label>Budget estimé</label>
+            <select>
+              <option>Moins de 80€</option>
+              <option>80€ – 150€</option>
+              <option>150€ – 300€</option>
+              <option>Plus de 300€</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
+        <div class="fgroup">
           <label>Votre vision</label>
-          <textarea placeholder="Décrivez votre événement, les couleurs, le thème, vos inspirations…"></textarea>
+          <textarea placeholder="Décrivez votre événement, les couleurs, le thème, vos inspirations… Plus vous partagez, mieux je peux créer !"></textarea>
         </div>
-        <button class="form-submit">
-          Envoyer ma demande ✦
-        </button>
+        <div class="form-footer">
+          <span class="form-note">🔒 Vos informations restent confidentielles.</span>
+          <button class="btn btn-primary form-submit" onclick="handleSubmit(event)">
+            Envoyer ma demande ✦
+          </button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-brand">
-      <div class="logo">Chi <span>Bakes</span></div>
-      <p>Pâtisserie artisanale, créée avec passion et amour pour vos moments les plus précieux.</p>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="social-btn">📸</a>
-        <a href="#" class="social-btn">💌</a>
+  <div class="divider"></div>
+
+  <!-- ══════════ POLICIES ══════════ -->
+  <section id="policies" class="section">
+    <div style="text-align:center;" class="reveal">
+      <div class="eyebrow">Transparence</div>
+      <h2 class="sec-title">Nos <em>Politiques</em></h2>
+      <p class="sec-sub" style="margin:0 auto;">Tout ce qu'il faut savoir avant de passer commande.</p>
+    </div>
+    <div class="policies-grid">
+      <div class="policy-card reveal">
+        <div class="policy-icon">📋</div>
+        <div class="policy-title">Conditions de commande</div>
+        <ul class="policy-list">
+          <li>Commande à effectuer 3 à 4 semaines à l'avance</li>
+          <li>Acompte de 50% à la confirmation</li>
+          <li>Solde dû au moment de la livraison ou du retrait</li>
+          <li>Toute annulation moins de 7 jours avant est non remboursable</li>
+          <li>Modifications acceptées jusqu'à 10 jours avant</li>
+        </ul>
+      </div>
+      <div class="policy-card reveal reveal-delay-1">
+        <div class="policy-icon">🌿</div>
+        <div class="policy-title">Allergènes & Régimes</div>
+        <ul class="policy-list">
+          <li>Gluten (blé, farine) présent dans la majorité des créations</li>
+          <li>Produits laitiers (beurre, crème, lait) utilisés</li>
+          <li>Œufs présents dans toutes les recettes standard</li>
+          <li>Options sans gluten disponibles sur demande (+10%)</li>
+          <li>Recettes vegan disponibles — précisez à la commande</li>
+          <li>Fabrication dans un environnement où circulent des noix</li>
+        </ul>
+      </div>
+      <div class="policy-card reveal reveal-delay-2">
+        <div class="policy-icon">🚗</div>
+        <div class="policy-title">Livraison & Retrait</div>
+        <ul class="policy-list">
+          <li>Retrait possible sur rendez-vous (Bruxelles)</li>
+          <li>Livraison disponible selon la zone géographique</li>
+          <li>Frais de livraison calculés selon la distance</li>
+          <li>Livraison mariage incluse dans le tarif (zone limitée)</li>
+          <li>Responsabilité transférée au client après remise</li>
+        </ul>
       </div>
     </div>
-    <div class="footer-col">
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer>
+    <div class="ft-brand">
+      <div class="logo">Chi <span>Bakes</span></div>
+      <p>Pâtisserie artisanale, créée avec passion et amour pour vos moments les plus précieux.</p>
+      <div class="ft-social">
+        <a href="https://www.instagram.com/chi.bakes_" target="_blank" class="soc-btn">📸</a>
+        <a href="#contact" class="soc-btn">💌</a>
+      </div>
+    </div>
+    <div class="ft-col">
       <h4>Navigation</h4>
       <ul>
+        <li><a href="#about">À propos</a></li>
         <li><a href="#services">Services & Tarifs</a></li>
         <li><a href="#gallery">Galerie</a></li>
         <li><a href="#reviews">Avis clients</a></li>
         <li><a href="#contact">Commander</a></li>
       </ul>
     </div>
-    <div class="footer-col">
+    <div class="ft-col">
       <h4>Informations</h4>
       <ul>
-        <li><a href="#">Politique de commande</a></li>
-        <li><a href="#">Allergènes & régimes</a></li>
-        <li><a href="#">Zone de livraison</a></li>
-        <li><a href="#">FAQ</a></li>
+        <li><a href="#policies">Conditions de commande</a></li>
+        <li><a href="#policies">Allergènes & régimes</a></li>
+        <li><a href="#policies">Livraison</a></li>
+        <li><a href="https://www.instagram.com/chi.bakes_" target="_blank">Instagram</a></li>
       </ul>
     </div>
   </footer>
@@ -1518,47 +1470,45 @@
   </div>
 
   <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        }
+    /* ── Scroll Reveal ── */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
       });
     }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-    // Mobile menu
-    function toggleMenu(btn) {
-      const nav = document.querySelector('.nav-links');
-      const open = nav.style.display === 'flex';
-      nav.style.display = open ? 'none' : 'flex';
-      nav.style.flexDirection = 'column';
-      nav.style.position = 'fixed';
-      nav.style.top = '70px';
-      nav.style.left = '0';
-      nav.style.right = '0';
-      nav.style.background = 'rgba(245, 239, 228, 0.97)';
-      nav.style.backdropFilter = 'blur(12px)';
-      nav.style.padding = '2rem';
-      nav.style.gap = '1.5rem';
-      nav.style.zIndex = '99';
-      nav.style.borderBottom = '1px solid var(--beige-dark)';
-      btn.children[0].style.transform = open ? '' : 'rotate(45deg) translate(5px, 5px)';
-      btn.children[1].style.opacity = open ? '1' : '0';
-      btn.children[2].style.transform = open ? '' : 'rotate(-45deg) translate(5px, -5px)';
+    /* ── Mobile Menu ── */
+    let menuOpen = false;
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      document.getElementById('mobileNav').classList.toggle('open', menuOpen);
+      const spans = document.querySelectorAll('#hamburger span');
+      spans[0].style.transform = menuOpen ? 'rotate(45deg) translate(5px,5px)' : '';
+      spans[1].style.opacity   = menuOpen ? '0' : '1';
+      spans[2].style.transform = menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
+    }
+    function closeMenu() {
+      menuOpen = false;
+      document.getElementById('mobileNav').classList.remove('open');
+      const spans = document.querySelectorAll('#hamburger span');
+      spans[0].style.transform = spans[2].style.transform = '';
+      spans[1].style.opacity = '1';
     }
 
-    // Close mobile menu on link click
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        const nav = document.querySelector('.nav-links');
-        if (window.innerWidth < 768) {
-          nav.style.display = 'none';
-        }
-      });
-    });
+    /* ── Form submit feedback ── */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.currentTarget;
+      btn.textContent = '✓ Message envoyé !';
+      btn.style.background = 'var(--caramel)';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Envoyer ma demande ✦';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 3500);
+    }
   </script>
 </body>
 </html>
